@@ -68,7 +68,7 @@ public class GameScreen extends ScreenAdapter {
         // 背景の準備
         Texture bgTexture = new Texture("back.png");
         // TextureRegionで切り出す時の原点は左上
-        mBg = new Sprite( new TextureRegion(bgTexture, 0, 0, 540, 810));
+        mBg = new Sprite(new TextureRegion(bgTexture, 0, 0, 540, 810));
         mBg.setSize(CAMERA_WIDTH, CAMERA_HEIGHT);
         mBg.setPosition(0, 0);
 
@@ -104,7 +104,7 @@ public class GameScreen extends ScreenAdapter {
     }
 
     @Override
-    public void render (float delta) {
+    public void render(float delta) {
         // それぞれの状態をアップデートする
         update(delta);
 
@@ -138,7 +138,7 @@ public class GameScreen extends ScreenAdapter {
         }
 
         //Enemy
-        for(int i=0; i<mEnemies.size();i++){
+        for (int i = 0; i < mEnemies.size(); i++) {
             mEnemies.get(i).draw(mGame.batch);
         }
 
@@ -198,8 +198,8 @@ public class GameScreen extends ScreenAdapter {
             //Enemyを配置
             if (mRandom.nextFloat() > 0.3f) {
                 x = mRandom.nextFloat() * (WORLD_WIDTH - Enemy.ENEMY_WIDTH);
-                Enemy enemy= new Enemy(enemyTexture, 0, 0, 72, 72);
-                enemy.setPosition(x,y+WORLD_HEIGHT/3);
+                Enemy enemy = new Enemy(enemyTexture, 0, 0, 72, 72);
+                enemy.setPosition(x, y + WORLD_HEIGHT / 3);
                 mEnemies.add(enemy);
             }
 
@@ -312,12 +312,11 @@ public class GameScreen extends ScreenAdapter {
         }
 
         //Enemyとの当たり判定
-        for(Enemy enemy: mEnemies){
-            if(mPlayer.getBoundingRectangle().overlaps(enemy.getBoundingRectangle())){
+        for (Enemy enemy : mEnemies) {
+            if (mPlayer.getBoundingRectangle().overlaps(enemy.getBoundingRectangle())) {
+                mGameState = GAME_STATE_GAMEOVER;
                 sound.play();
-                if (Gdx.input.justTouched()) {
-                    mGame.setScreen(new ResultScreen(mGame, mScore));
-                }
+                return;
             }
         }
 
